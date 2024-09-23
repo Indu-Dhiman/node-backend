@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Sequelize, Op } from "sequelize";
 import * as bcrypt from "bcrypt";
-import User from "models/user";
+import User from "../../models/user";
 import { checkAccessToken, generateTokens } from "../../util/auth"
 
 

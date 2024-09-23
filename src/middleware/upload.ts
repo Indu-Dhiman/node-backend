@@ -3,10 +3,10 @@ import multer from "multer";
 const maxSize = 200 * 1024 * 1024;
 
 let storage = multer.diskStorage({
-    destination: (req, file, cb) => {
+    destination: (req:any, file:any, cb:any) => {
         cb(null, "./upload");
     },
-    filename: (req, file, cb) => {
+    filename: (req:any, file:any, cb:any) => {
         cb(null, `${new Date().getTime().toString()}-${file.originalname}`);
     },
 });
