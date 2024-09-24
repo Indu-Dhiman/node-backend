@@ -30,6 +30,7 @@ const createUser = async (req: Request, res: Response) => {
         username: req.body.username,
         email: req.body.email,
         password: hashedPassword,
+        role:req.body.role
       };
       const user = await User.create(userCreated);
       var { accessToken } = await generateTokens(user.dataValues.id);
