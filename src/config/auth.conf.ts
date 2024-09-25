@@ -5,7 +5,7 @@ const CONF = {
     // process.env.NODE_ENV == "development"
     //   ? 'avcbdfhgryfbfdgh25wgy56'
     //   : '',
-  expiresIn: "360 days",
+  expiresIn: "8h",
 };
 
 export default CONF;

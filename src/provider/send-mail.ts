@@ -26,7 +26,7 @@ const sendForgotEmail = (link: any, email: string) => {
     };
 
     //send email
-    transporter.sendMail(message, function (err, info) {
+    transporter.sendMail(message, function (err:any, info:any) {
         if (err) { console.log(err) }
         else { console.log('sent'); }
     });
@@ -43,7 +43,7 @@ const sendEmail = (html: any, email: any, subject: any, from?:any, cc?: any, att
     };
 
     //send email
-    transporter.sendMail(message, function (err, info) {
+    transporter.sendMail(message, function (err:any, info:any) {
         if (err) { 
             console.log(err);  
             resolve(false);

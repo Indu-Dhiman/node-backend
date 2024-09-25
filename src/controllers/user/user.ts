@@ -167,11 +167,27 @@ const createUser = async (req: Request, res: Response) => {
     }
   };
 
+  const getUsers = async (req: Request, res: Response) => {
+    try {
+      const users = await User.findAll({
+        where: {
+          role: 'user', // Change this to whatever identifies a non-admin role
+        },
+      });
+      res.sendSuccess(res, users);
+    } catch (error: any) {
+      console.error(error);
+      return res.sendError(res, "ERR_INTERNAL_SERVER_ERROR");
+    }
+  };
+  
+
 export {
     createUser,
     updateUserProfile,
     loginUser,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    getUsers
   
 };
