@@ -66,10 +66,42 @@ const createUser = async (req: Request, res: Response) => {
       return res.sendError(res, "ERR_INTERNAL_SERVER_ERROR");
     }
   };
+
+  const updateUserProfile=async(req:Request,res:Response)=>{
+    try{
+      const {id,username,userProfile}=req.body
+      const user = await User.findByPk(id);
+
+      if (!user) {
+        return res.sendError(res, "User not found");
+      }
+      const updatedData: any = {};
+      if (username) {
+        updatedData.username = username;
+      }
+      if (userProfile) {
+        updatedData.userProfile = userProfile;
+      }
   
+      // If nothing is provided to update
+      if (Object.keys(updatedData).length === 0) {
+        return res.sendError(res, "No data provided to update");
+      }
+  
+      // Update the user in the database
+      await user.update(updatedData);
+  
+      return res.sendSuccess(res, { user });
+    }
+    catch (error: any) {
+      console.error(error);
+      return res.sendError(res, "ERR_INTERNAL_SERVER_ERROR");
+    }
+  };
 
 export {
     createUser,
+    updateUserProfile,
     loginUser,
   
 };
