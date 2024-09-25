@@ -5,8 +5,8 @@ import cors from "cors";
 import errorMiddleware from "./middleware/error";
 import setInterface from "./middleware/interface";
 
-
 import userRouter from "./router/user";
+import fileRouter from './router/upload';
 
 
 dotenv.config();
@@ -36,8 +36,11 @@ const connectToDb = async () => {
 };
 
 app.use("/user", userRouter);
+app.use("/file", fileRouter);
+
 
 app.use(errorMiddleware);
+
 
 app.listen(5000, () => {
   connectToDb();

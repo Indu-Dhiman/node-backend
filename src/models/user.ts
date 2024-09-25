@@ -20,6 +20,10 @@ const User = db.define('Users', {
   role: {
     type: DataTypes.STRING
   },
+  userProfile:{
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE
