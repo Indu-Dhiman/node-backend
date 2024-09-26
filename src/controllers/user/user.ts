@@ -171,8 +171,9 @@ const createUser = async (req: Request, res: Response) => {
     try {
       const users = await User.findAll({
         where: {
-          role: 'user', // Change this to whatever identifies a non-admin role
+          role: 'user', 
         },
+        order: [['createdAt', 'ASC']], 
       });
       res.sendSuccess(res, users);
     } catch (error: any) {
@@ -180,6 +181,25 @@ const createUser = async (req: Request, res: Response) => {
       return res.sendError(res, "ERR_INTERNAL_SERVER_ERROR");
     }
   };
+
+  const deleteUser = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params; 
+
+        const user = await User.findByPk(id);
+        if (!user) {
+            return res.sendError(res, "User not found");
+        }
+
+        await User.destroy({ where: { id } });
+
+        return res.sendSuccess(res, { message: "User deleted successfully" });
+    } catch (error: any) {
+        console.error(error);
+        return res.sendError(res, "ERR_INTERNAL_SERVER_ERROR");
+    }
+};
+
   
 
 export {
@@ -188,6 +208,7 @@ export {
     loginUser,
     forgotPassword,
     resetPassword,
-    getUsers
+    getUsers,
+    deleteUser
   
 };

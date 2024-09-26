@@ -7,6 +7,7 @@ import setInterface from "./middleware/interface";
 
 import userRouter from "./router/user";
 import fileRouter from './router/upload';
+import getMenuLits from './router/menulist';
 
 
 dotenv.config();
@@ -37,6 +38,7 @@ const connectToDb = async () => {
 
 app.use("/user", userRouter);
 app.use("/file", fileRouter);
+app.use("/", getMenuLits);
 
 
 app.use(errorMiddleware);
