@@ -4,11 +4,11 @@ import sequelize from "./util/dbConn";
 import cors from "cors";
 import errorMiddleware from "./middleware/error";
 import setInterface from "./middleware/interface";
+import typeValidationMiddleware from './middleware/typeValidation';
 
 import userRouter from "./router/user";
 import fileRouter from './router/upload';
 import getMenuLits from './router/menulist';
-
 
 dotenv.config();
 const app = express();
@@ -23,7 +23,6 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 app.use(setInterface);
 
 const connectToDb = async () => {
@@ -42,6 +41,7 @@ app.use("/", getMenuLits);
 
 
 app.use(errorMiddleware);
+app.use(typeValidationMiddleware)
 
 
 app.listen(5000, () => {
