@@ -1,11 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import { checkAccessToken } from "../util/auth"; // External token check
+import { checkAccessToken } from "../util/auth";
 
 interface AuthenticatedRequest extends Request {
-  user?: { role: string; }; // Add role to user type
+  user?: { role: string; }; 
 }
 
-// Helper function to validate token and return user data or an error
 const validateToken = async (token: string) => {
   const { data, error }: any = await checkAccessToken(token);
 
@@ -19,7 +18,7 @@ const validateToken = async (token: string) => {
         throw { status: 403, code: "ERR_INVALID_ACCESS_TOKEN" };
     }
   }
-  return data.user; // Assuming user object has role property
+  return data.user;
 };
 
 const accessControl = async (
@@ -28,7 +27,6 @@ const accessControl = async (
   next: NextFunction
 ) => {
   try {
-    // Extract token from the authorization header
     const authToken = req.header("authorization")?.replace("Bearer ", "");
     if (!authToken) {
       return res.status(401).json({
@@ -42,7 +40,6 @@ const accessControl = async (
     const user = await validateToken(authToken);
     req.user = user;
     
-    console.log(user,"userrole===============================")
     if ( user.role !== 'admin') {
       return res.status(403).json({
         error: {
