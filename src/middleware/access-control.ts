@@ -19,7 +19,6 @@ const validateToken = async (token: string) => {
         throw { status: 403, code: "ERR_INVALID_ACCESS_TOKEN" };
     }
   }
-
   return data.user; // Assuming user object has role property
 };
 
@@ -42,7 +41,8 @@ const accessControl = async (
 
     const user = await validateToken(authToken);
     req.user = user;
-
+    
+    console.log(user,"userrole===============================")
     if ( user.role !== 'admin') {
       return res.status(403).json({
         error: {

@@ -37,7 +37,7 @@ const createUser = async (req: Request, res: Response) => {
         role:req.body.role
       };
       const user = await User.create(userCreated);
-      var { accessToken } = await generateTokens(user.dataValues.id);
+      var { accessToken } = await generateTokens(user.dataValues.id,user?.dataValues?.role);
       return res.sendSuccess(res, { user, accessToken });
     } catch (error: any) {
       console.log(error);
@@ -59,11 +59,10 @@ const createUser = async (req: Request, res: Response) => {
       }
   
       const passwordMatch = await bcrypt.compare(password, user.password);
-  
       if (!passwordMatch) {
         return res.sendError(res, "Password Not Matched");
       }
-      var { accessToken } = await generateTokens(user.dataValues.id);
+      var { accessToken } = await generateTokens(user.dataValues.id,user.dataValues.role);
       return res.sendSuccess(res, { user, accessToken });
     } catch (error: any) {
       console.error(error);
@@ -175,7 +174,8 @@ const createUser = async (req: Request, res: Response) => {
         },
         order: [['createdAt', 'ASC']], 
       });
-      res.sendSuccess(res, users);
+      console.log(users,"================")
+     return res.sendSuccess(res, users);
     } catch (error: any) {
       console.error(error);
       return res.sendError(res, "ERR_INTERNAL_SERVER_ERROR");
