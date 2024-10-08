@@ -5,6 +5,7 @@ import cors from "cors";
 import errorMiddleware from "./middleware/error";
 import setInterface from "./middleware/interface";
 import typeValidationMiddleware from './middleware/typeValidation';
+import logging from "./middleware/logging";
 
 import userRouter from "./router/user";
 import fileRouter from './router/upload';
@@ -38,6 +39,7 @@ const connectToDb = async () => {
 app.use("/user", userRouter);
 app.use("/file", fileRouter);
 app.use("/", getMenuLits);
+app.use(logging);
 
 
 app.use(errorMiddleware);

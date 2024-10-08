@@ -34,7 +34,8 @@ const createUser = async (req: Request, res: Response) => {
         username: req.body.username,
         email: req.body.email,
         password: hashedPassword,
-        role:req.body.role
+        role:req.body.role,
+        platform:req.body.platform
       };
       const user = await User.create(userCreated);
       var { accessToken } = await generateTokens(user.dataValues.id,user?.dataValues?.role);
@@ -47,7 +48,7 @@ const createUser = async (req: Request, res: Response) => {
   
   const loginUser = async (req: Request, res: Response) => {
     try {
-      const { email, password } = req.body;
+      const { email, password,platform } = req.body;
       const user = await User.findOne({
         where: {
           email: email,
@@ -56,6 +57,10 @@ const createUser = async (req: Request, res: Response) => {
   
       if (!user) {
         return res.sendError(res, "Email Not Found");
+      }
+      const validPlatforms = ['email', 'google', 'facebook'];
+      if (!validPlatforms.includes(platform)) {
+        return res.sendError(res, "Unsupported platform. Please use email, Google, or Facebook.");
       }
   
       const passwordMatch = await bcrypt.compare(password, user.password);
