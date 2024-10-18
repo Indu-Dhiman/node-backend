@@ -14,7 +14,6 @@ const generator = (time: Date | null, index: number) => {
   return `logs/${year}-${month}/${year}-${month}-${day}-${hour}-${minute}-${index}-access.log`;
 };
 
-/** Rotate if 10 MegaByte or 1 day is over */
 var accessLogStream = rfs.createStream(generator, {
   size: "10M",
   interval: "1d",
